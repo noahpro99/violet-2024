@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { InputResult } from './InputResult';
+import type { InputResultOutcome } from './InputResultOutcome';
 export type MaternityRecord = {
     id: string;
     user_id: string;
@@ -12,12 +12,13 @@ export type MaternityRecord = {
     BS: number;
     BodyTemp: number;
     HeartRate: number;
-    res_age: InputResult;
-    res_systolic_bp: InputResult;
-    res_diastolic_bp: InputResult;
-    res_bs: InputResult;
-    res_body_temp: InputResult;
-    res_heart_rate: InputResult;
+    res_age: InputResultOutcome;
+    res_systolic_bp: InputResultOutcome;
+    res_diastolic_bp: InputResultOutcome;
+    res_bs: InputResultOutcome;
+    res_body_temp: InputResultOutcome;
+    res_heart_rate: InputResultOutcome;
+    recommendation: string;
     date: string;
     result: number;
 };

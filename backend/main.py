@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 from enum import Enum
 import secrets
 from fastapi import Depends, FastAPI, HTTPException
@@ -9,11 +9,18 @@ import pandas as pd
 import os
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.ensemble._forest import RandomForestClassifier  # Importing for type hint
-from typing import Annotated, Type
+from typing import Annotated, Optional, Type
 import uvicorn
 from pydantic import BaseModel
 import contextlib
 import shap
+import dotenv
+from openai import OpenAI
+
+dotenv.load_dotenv()
+
+client = OpenAI()
+
 
 from pymongo.database import Database
 
@@ -21,13 +28,22 @@ from auth import get_user
 from db import get_mongo_db
 
 MEAN_DATA_VALUES = {
-    "AGE": 50,
-    "SystolicBP": 100,
-    "DiastolicBP": 100,
-    "BS": 100,
-    "BodyTemp": 100,
-    "HeartRate": 100,
+    "AGE": 29.9,
+    "SystolicBP": 113,
+    "DiastolicBP": 76.5,
+    "BS": 8.73,
+    "BodyTemp": 98.7,
+    "HeartRate": 74.3,
 }
+
+# STD_DATA_VALUES = {
+#     "AGE": 13.5,
+#     "SystolicBP": 18.4,
+#     "DiastolicBP": 13.9,
+#     "BS": 3.29,
+#     "BodyTemp": 1.37,
+#     "HeartRate": 8.08,
+# }
 
 
 def load_model() -> Type[RandomForestClassifier]:
@@ -56,7 +72,7 @@ app.add_middleware(
 
 
 class DataInput(BaseModel):
-    Age: int
+    Age: Optional[int] = None
     SystolicBP: int
     DiastolicBP: int
     BS: float
@@ -70,11 +86,6 @@ class InputResultOutcome(str, Enum):
     normal = "normal"
 
 
-class InputResult(BaseModel):
-    inputResultOutcome: InputResultOutcome
-    recommendation: str  # from gpt
-
-
 class MaternityRecord(BaseModel):
     id: str
     user_id: str
@@ -85,12 +96,13 @@ class MaternityRecord(BaseModel):
     BodyTemp: float
     HeartRate: int
 
-    res_age: InputResult
-    res_systolic_bp: InputResult
-    res_diastolic_bp: InputResult
-    res_bs: InputResult
-    res_body_temp: InputResult
-    res_heart_rate: InputResult
+    res_age: InputResultOutcome
+    res_systolic_bp: InputResultOutcome
+    res_diastolic_bp: InputResultOutcome
+    res_bs: InputResultOutcome
+    res_body_temp: InputResultOutcome
+    res_heart_rate: InputResultOutcome
+    recommendation: str
     date: str
     result: int
 
@@ -101,6 +113,9 @@ async def predict(
     user: Annotated[dict, Depends(get_user)],
     db: Annotated[Database, Depends(get_mongo_db)],
 ) -> MaternityRecord:
+    print(data)
+    age = date.today().year - datetime.strptime(user["birth_date"], "%Y-%m-%d").year
+    data.Age = age
     model = app.state.model
     explainer = app.state.explainer
     result = int(model.predict(pd.DataFrame(data.model_dump(), index=[0]))[0])
@@ -108,27 +123,59 @@ async def predict(
 
     input_vars = []
 
-    for i, (mean_value, input_value) in enumerate(
-        zip(MEAN_DATA_VALUES.values(), data.model_dump().values())
+    for i, (key, input_value) in enumerate(
+        zip(MEAN_DATA_VALUES.keys(), data.model_dump().values())
     ):
         if shap_values[result][0][i] > 0:
-            if input_value > int(mean_value):
+            if input_value > int(MEAN_DATA_VALUES[key]):
                 input_result_outcome = InputResultOutcome.high
             else:
                 input_result_outcome = InputResultOutcome.low
         else:
             input_result_outcome = InputResultOutcome.normal
-        # gpt call
-        input_vars.append(
-            InputResult(
-                inputResultOutcome=input_result_outcome, recommendation="recommendation"
-            )
-        )
+        input_vars.append(input_result_outcome)
+
+    input_vars_mapping = [
+        "Age",
+        "SystolicBP",
+        "DiastolicBP",
+        "BS",
+        "BodyTemp",
+        "HeartRate",
+    ]
+    important_vars = "\n".join(
+        [
+            f"{input_vars_mapping[i]}: {input_vars[i]}"
+            for i in range(len(input_vars))
+            if input_vars[i] != InputResultOutcome.normal and i != 0
+        ]
+    )
+    response = client.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {
+                "role": "system",
+                "content": "Only output the instructions of what the user should do based on the data and results",
+            },
+            {
+                "role": "user",
+                "content": f"""Here is my maternity health data:
+Maternity Health Predicted Risk: {result} (0: Low, 1: Moderate, 2: High)
+{important_vars}""",
+            },
+        ],
+    )
+    print(
+        f"""Here is my maternity health data:
+Maternity Health Predicted Risk: {result} (0: Low, 1: Moderate, 2: High)
+{important_vars}"""
+    )
+    recommendation = response.choices[0].message.content
 
     record = MaternityRecord(
         id=secrets.token_urlsafe(16),
         user_id=user["id"],
-        Age=data.Age,
+        Age=age,
         SystolicBP=data.SystolicBP,
         DiastolicBP=data.DiastolicBP,
         BS=data.BS,
@@ -141,6 +188,7 @@ async def predict(
         res_body_temp=input_vars[4],
         res_heart_rate=input_vars[5],
         date=date.today().strftime("%Y-%m-%d"),
+        recommendation=recommendation,
         result=result,
     )
 
@@ -154,6 +202,7 @@ class SignupRequest(BaseModel):
     email: str
     username: str
     password: str
+    birth_date: date
 
 
 class LoginResponse(BaseModel):
@@ -175,6 +224,7 @@ async def signup(
             {
                 "id": id,
                 "username": signup_data.username,
+                "birth_date": signup_data.birth_date.strftime("%Y-%m-%d"),
                 "email": signup_data.email,
                 "password": signup_data.password,
                 "token": token,

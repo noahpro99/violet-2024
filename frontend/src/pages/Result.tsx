@@ -1,5 +1,5 @@
 import React from 'react'
-import { DefaultService, InputResult, InputResultOutcome, MaternityRecord } from '../api';
+import { DefaultService, InputResultOutcome, MaternityRecord } from '../api';
 import { TConductorInstance } from "react-canvas-confetti/dist/types";
 import Fireworks from "react-canvas-confetti/dist/presets/realistic";
 import Navbar from '../components/Navbar';
@@ -7,16 +7,15 @@ import { useState } from "react";
 import { useParams } from 'react-router-dom';
 import Loading from '../components/Loading';
 
-const TestResultCard: React.FC<{ result: InputResult, label: string }> = ({ result, label }) => {
+const TestResultCard: React.FC<{ result: InputResultOutcome, label: string }> = ({ result, label }) => {
 
   return (
     <div className='p-4 w-full'>
       <div className='flex flex-col w-full items-center justify-between py-2 border-2 border-[#f6a4ab] rounded-2xl px-4'>
         <div className='flex justify-between w-full'>
           <div className='text-lg font-semibold'>{label}</div>
-          <div className={`text-lg font-semibold ${result.inputResultOutcome === InputResultOutcome.HIGH ? 'text-red-500' : 'text-green-500'}`}>{result.inputResultOutcome}</div>
+          <div className={`text-lg font-semibold ${result === InputResultOutcome.HIGH ? 'text-red-500' : 'text-green-500'}`}>{result}</div>
         </div>
-        <div className='font-semibold'>{result.recommendation}</div>
       </div>
     </div>
   );
@@ -65,12 +64,12 @@ export default function Result() {
             Risk: {record.result}
           </div>
         </div>
-        {record.res_age.inputResultOutcome !== InputResultOutcome.NORMAL && <TestResultCard result={record.res_age} label="Age" />}
-        {record.res_systolic_bp.inputResultOutcome !== InputResultOutcome.NORMAL && <TestResultCard result={record.res_systolic_bp} label="Systolic BP" />}
-        {record.res_diastolic_bp.inputResultOutcome !== InputResultOutcome.NORMAL && <TestResultCard result={record.res_diastolic_bp} label="Diastolic BP" />}
-        {record.res_bs.inputResultOutcome !== InputResultOutcome.NORMAL && <TestResultCard result={record.res_bs} label="Blood Sugar" />}
-        {record.res_body_temp.inputResultOutcome !== InputResultOutcome.NORMAL && <TestResultCard result={record.res_body_temp} label="Body Temperature" />}
-        {record.res_heart_rate.inputResultOutcome !== InputResultOutcome.NORMAL && <TestResultCard result={record.res_heart_rate} label="Heart Rate" />}
+        {record.res_age !== InputResultOutcome.NORMAL && <TestResultCard result={record.res_age} label="Age" />}
+        {record.res_systolic_bp !== InputResultOutcome.NORMAL && <TestResultCard result={record.res_systolic_bp} label="Systolic BP" />}
+        {record.res_diastolic_bp !== InputResultOutcome.NORMAL && <TestResultCard result={record.res_diastolic_bp} label="Diastolic BP" />}
+        {record.res_bs !== InputResultOutcome.NORMAL && <TestResultCard result={record.res_bs} label="Blood Sugar" />}
+        {record.res_body_temp !== InputResultOutcome.NORMAL && <TestResultCard result={record.res_body_temp} label="Body Temperature" />}
+        {record.res_heart_rate !== InputResultOutcome.NORMAL && <TestResultCard result={record.res_heart_rate} label="Heart Rate" />}
       </div>
 
       <Navbar />

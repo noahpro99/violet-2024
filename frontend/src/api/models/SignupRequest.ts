@@ -6,5 +6,6 @@ export type SignupRequest = {
     email: string;
     username: string;
     password: string;
+    birth_date: string;
 };
 

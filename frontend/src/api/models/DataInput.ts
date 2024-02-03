@@ -3,7 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type DataInput = {
-    Age: number;
+    Age?: (number | null);
     SystolicBP: number;
     DiastolicBP: number;
     BS: number;

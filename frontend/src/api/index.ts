@@ -10,7 +10,6 @@ export type { OpenAPIConfig } from './core/OpenAPI';
 export type { DataInput } from './models/DataInput';
 export type { HTTPBasicCredentials } from './models/HTTPBasicCredentials';
 export type { HTTPValidationError } from './models/HTTPValidationError';
-export type { InputResult } from './models/InputResult';
 export { InputResultOutcome } from './models/InputResultOutcome';
 export type { LoginResponse } from './models/LoginResponse';
 export type { MaternityRecord } from './models/MaternityRecord';

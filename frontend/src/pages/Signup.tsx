@@ -11,16 +11,16 @@ const Signup: React.FC = () => {
   const navigate = useNavigate();
 
   const handleSignup = async () => {
-    DefaultService.signupSignupPost({
-      email: email,
-      password: password,
-      username: username
-    }).then((response) => {
-      login(response.token);
-      navigate('/dashboard');
-    }).catch((error) => {
-      console.log(error);
-    });
+    // DefaultService.signupSignupPost({
+    //   email: email,
+    //   password: password,
+    //   username: username
+    // }).then((response) => {
+    //   login(response.token);
+    //   navigate('/dashboard');
+    // }).catch((error) => {
+    //   console.log(error);
+    // });
   };
 
   return (
