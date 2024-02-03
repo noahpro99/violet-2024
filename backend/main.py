@@ -209,6 +209,16 @@ class LoginResponse(BaseModel):
     token: str
 
 
+class User(BaseModel):
+    id: str
+    username: str
+    birth_date: str
+    email: str
+    password: str
+    token: str
+    notification_token: Optional[str] = None
+
+
 @app.post("/signup")
 async def signup(
     signup_data: SignupRequest, db: Annotated[Database, Depends(get_mongo_db)]
@@ -220,17 +230,26 @@ async def signup(
     else:
         id = secrets.token_urlsafe(16)
         token = secrets.token_urlsafe(16)
-        users.insert_one(
-            {
-                "id": id,
-                "username": signup_data.username,
-                "birth_date": signup_data.birth_date.strftime("%Y-%m-%d"),
-                "email": signup_data.email,
-                "password": signup_data.password,
-                "token": token,
-            }
+        user = User(
+            id=id,
+            username=signup_data.username,
+            birth_date=signup_data.birth_date.strftime("%Y-%m-%d"),
+            email=signup_data.email,
+            password=signup_data.password,
+            token=token,
         )
+        users.insert_one(user.model_dump())
         return LoginResponse(token=token)
+
+
+@app.get("/user/me")
+async def get_user_data(
+    user: Annotated[dict, Depends(get_user)],
+    db: Annotated[Database, Depends(get_mongo_db)],
+) -> User:
+    users = db["users"]
+    user_data = User.model_validate(users.find_one({"id": user["id"]}, {"_id": 0}))
+    return user_data
 
 
 @app.post("/login")

@@ -7,6 +7,7 @@ import type { HTTPBasicCredentials } from '../models/HTTPBasicCredentials';
 import type { LoginResponse } from '../models/LoginResponse';
 import type { MaternityRecord } from '../models/MaternityRecord';
 import type { SignupRequest } from '../models/SignupRequest';
+import type { User } from '../models/User';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
@@ -47,6 +48,17 @@ export class DefaultService {
             errors: {
                 422: `Validation Error`,
             },
+        });
+    }
+    /**
+     * Get User Data
+     * @returns User Successful Response
+     * @throws ApiError
+     */
+    public static getUserDataUserMeGet(): CancelablePromise<User> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/user/me',
         });
     }
     /**

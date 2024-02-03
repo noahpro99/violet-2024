@@ -14,6 +14,7 @@ export { InputResultOutcome } from './models/InputResultOutcome';
 export type { LoginResponse } from './models/LoginResponse';
 export type { MaternityRecord } from './models/MaternityRecord';
 export type { SignupRequest } from './models/SignupRequest';
+export type { User } from './models/User';
 export type { ValidationError } from './models/ValidationError';
 
 export { DefaultService } from './services/DefaultService';
