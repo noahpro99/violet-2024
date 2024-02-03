@@ -58,7 +58,7 @@ export default function NewReading() {
               Systolic Blood Pressure
             </label>
             <div className="flex flex-row">
-              <Slider id='systolic_bp' max={100} min={0} defaultValue={[50, 0]} onValueChange={(value) => setSystolicBP(value[0])} />
+              <Slider id='systolic_bp' max={100} min={0} defaultValue={[50]} onValueChange={(value) => setSystolicBP(value[0])} />
               <div className="text-xl">{systolicBP}</div>
             </div>
           </div>
@@ -67,7 +67,7 @@ export default function NewReading() {
               Diastolic Blood Pressure
             </label>
             <div className="flex flex-row">
-              <Slider id='diastolic_bp' max={100} min={0} defaultValue={[50, 0]} onValueChange={(value) => setDiastolicBP(value[0])} />
+              <Slider id='diastolic_bp' max={100} min={0} defaultValue={[50]} onValueChange={(value) => setDiastolicBP(value[0])} />
               <div className="text-xl">{diastolicBP}</div>
             </div>
           </div>
@@ -76,7 +76,7 @@ export default function NewReading() {
               Blood Sugar
             </label>
             <div className="flex flex-row">
-              <Slider id='bs' max={100} min={0} defaultValue={[50, 0]} onValueChange={(value) => setBs(value[0])} />
+              <Slider id='bs' max={100} min={0} defaultValue={[50]} onValueChange={(value) => setBs(value[0])} />
               <div className="text-xl">{bs}</div>
             </div>
           </div>
@@ -85,7 +85,7 @@ export default function NewReading() {
               Body Temperature
             </label>
             <div className="flex flex-row">
-              <Slider id='body_temp' max={100} min={0} defaultValue={[50, 0]} onValueChange={(value) => setBodyTemp(value[0])} />
+              <Slider id='body_temp' max={100} min={0} defaultValue={[50]} onValueChange={(value) => setBodyTemp(value[0])} />
               <div className="text-xl">{bodyTemp}</div>
             </div>
           </div>
@@ -94,7 +94,7 @@ export default function NewReading() {
               Heart Rate
             </label>
             <div className="flex flex-row">
-              <Slider id='heart_rate' max={100} min={0} defaultValue={[50, 0]} onValueChange={(value) => setHeartRate(value[0])} />
+              <Slider id='heart_rate' max={100} min={0} defaultValue={[50]} onValueChange={(value) => setHeartRate(value[0])} />
               <div className="text-xl">{heartRate}</div>
             </div>
           </div>
