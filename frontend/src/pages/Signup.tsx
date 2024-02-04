@@ -104,21 +104,20 @@ const Signup: React.FC = () => {
                 <PopoverTrigger asChild>
                   <Button
                     variant={"outline"}
-                    className={cn(
-                      "w-[280px] justify-start text-left font-normal",
-                      !date && "text-muted-foreground"
-                    )}
+                    className={cn("w-[240px] justify-start text-left font-normal", !date && "text-muted-foreground")}
                   >
                     <CalendarIcon className="mr-2 h-4 w-4" />
-                    {date ? format(date, "yyyy-mm-dd") : <span>Pick a date</span>}
+                    {date ? format(date, "PPP") : <span>Pick a date</span>}
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto p-0">
+                <PopoverContent align="start" className=" w-auto p-0">
                   <Calendar
                     mode="single"
+                    captionLayout="dropdown-buttons"
                     selected={date}
                     onSelect={setDate}
-                    initialFocus
+                    fromYear={1960}
+                    toYear={2030}
                   />
                 </PopoverContent>
               </Popover>

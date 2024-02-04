@@ -17,6 +17,10 @@
     }
 }
 
+/* date picker */
+.rdp-vhidden {
+    @apply hidden;
+}
 @layer base {
     :root {
         --background: 0 0% 100%;
