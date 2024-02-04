@@ -13,7 +13,7 @@ const Login: React.FC = () => {
     if (localStorage.getItem('token')) {
       navigate('/dashboard');
     }
-  }, []);
+  }, [navigate]);
 
   const handleLogin = async () => {
     DefaultService.loginLoginPost({

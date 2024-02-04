@@ -21,7 +21,7 @@ const Signup: React.FC = () => {
     if (localStorage.getItem('token')) {
       navigate('/dashboard');
     }
-  }, []);
+  }, [navigate]);
 
   const handleSignup = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
