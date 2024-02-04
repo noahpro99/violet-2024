@@ -101,7 +101,7 @@ const Dashboard = () => {
     <div className="flex flex-col items-center min-h-screen bg-white">
 
       {/* parent of line must have defined size */}
-      <Logo logoText="Hygeia" />
+      <Logo logoText="Aether" />
       {graphs[graphDataVars.findIndex((graphDataVar) => graphDataVar === graphSelectedVar)]}
       <div className="border-b-2 w-full border-blue-500" />
       <ReadingsCard readings={readings} />
