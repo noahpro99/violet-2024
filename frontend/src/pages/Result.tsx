@@ -19,7 +19,7 @@ const TestResultCard: React.FC<{ result: InputResultOutcome, label: string }> = 
           {result === InputResultOutcome.HIGH && <svg className="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 10l7-7m0 0l7 7m-7-7v18" />
           </svg>}
-          {result === InputResultOutcome.LOW && <svg className={`w-3 h-6 text-red-500`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          {result === InputResultOutcome.LOW && <svg className={`w-6 h-6 text-red-500`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
           </svg>}
           {/* green dot for normal */}
@@ -73,14 +73,13 @@ export default function Result() {
     <div className="flex flex-col items-center min-h-screen bg-[white]">
       <div className="w-11/12 ">
         {record.result === 0 && <Fireworks onInit={onInit} />}
-        <div className="text-center text-2xl font-bold mb-4 text-">Test Results</div>
-        <div className="text-center mt-8">
+        <div className="text-center text-2xl font-bold p-4 text-blue-500">Test Results</div>
+        <div className="text-center">
           <div className="date text-lg">{record.date}</div>
           <div className={`risk-result text-xl font-semibold ${record.result === 2 ? 'text-red-500' : 'text-green-500'}`}>
             Risk: {resultIntToStr[record.result]}
           </div>
         </div>
-        <TestResultCard result={record.res_age} label="Age" />
         <TestResultCard result={record.res_systolic_bp} label="Systolic BP" />
         <TestResultCard result={record.res_diastolic_bp} label="Diastolic BP" />
         <TestResultCard result={record.res_bs} label="Blood Sugar" />
