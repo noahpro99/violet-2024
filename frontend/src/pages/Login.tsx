@@ -9,6 +9,12 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
+  React.useEffect(() => {
+    if (localStorage.getItem('token')) {
+      navigate('/dashboard');
+    }
+  }, []);
+
   const handleLogin = async () => {
     DefaultService.loginLoginPost({
       username: email,

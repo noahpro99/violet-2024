@@ -17,6 +17,12 @@ const Signup: React.FC = () => {
   const [date, setDate] = useState<Date>();
   const navigate = useNavigate();
 
+  React.useEffect(() => {
+    if (localStorage.getItem('token')) {
+      navigate('/dashboard');
+    }
+  }, []);
+
   const handleSignup = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (!email || !password || !username || !date) {
