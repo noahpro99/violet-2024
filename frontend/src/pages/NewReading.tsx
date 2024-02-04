@@ -8,11 +8,11 @@ import { Slider } from "../components/ui/slider";
 export default function NewReading() {
   let [error, setError] = React.useState<string | null>(null);
   let [loading, setLoading] = React.useState<boolean>(false);
-  let [systolicBP, setSystolicBP] = React.useState<number>(50);
-  let [diastolicBP, setDiastolicBP] = React.useState<number>(50);
-  let [bs, setBs] = React.useState<number>(50.0);
-  let [bodyTemp, setBodyTemp] = React.useState<number>(50.0);
-  let [heartRate, setHeartRate] = React.useState<number>(50);
+  let [systolicBP, setSystolicBP] = React.useState<number>(110);
+  let [diastolicBP, setDiastolicBP] = React.useState<number>(75);
+  let [bs, setBs] = React.useState<number>(10.0);
+  let [bodyTemp, setBodyTemp] = React.useState<number>(100.0);
+  let [heartRate, setHeartRate] = React.useState<number>(80);
 
   let navigate = useNavigate();
 
@@ -52,8 +52,8 @@ export default function NewReading() {
               Systolic Blood Pressure
             </label>
             <div className="flex flex-row">
-              <Slider id='systolic_bp' max={100} min={0} defaultValue={[50]} onValueChange={(value) => setSystolicBP(value[0])} />
-              <div className="text-xl">{systolicBP}</div>
+              <Slider id='systolic_bp' max={150} min={70} defaultValue={[110]} onValueChange={(value) => setSystolicBP(value[0])} />
+              <div className="text-md whitespace-nowrap">{systolicBP} mmHg</div>
             </div>
           </div>
           <div className="">
@@ -61,8 +61,8 @@ export default function NewReading() {
               Diastolic Blood Pressure
             </label>
             <div className="flex flex-row">
-              <Slider id='diastolic_bp' max={100} min={0} defaultValue={[50]} onValueChange={(value) => setDiastolicBP(value[0])} />
-              <div className="text-xl">{diastolicBP}</div>
+              <Slider id='diastolic_bp' max={115} min={35} defaultValue={[75]} onValueChange={(value) => setDiastolicBP(value[0])} />
+              <div className="text-md whitespace-nowrap">{diastolicBP} mmHg</div>
             </div>
           </div>
           <div className="">
@@ -70,8 +70,8 @@ export default function NewReading() {
               Blood Sugar
             </label>
             <div className="flex flex-row">
-              <Slider id='bs' max={100} min={0} itemType='float' defaultValue={[50]} onValueChange={(value) => setBs(value[0])} />
-              <div className="text-xl">{bs}</div>
+              <Slider id='bs' max={20} min={0} itemType='float' defaultValue={[10]} onValueChange={(value) => setBs(value[0])} />
+              <div className="text-md whitespace-nowrap">{bs} mmol/L</div>
             </div>
           </div>
           <div className="">
@@ -79,8 +79,8 @@ export default function NewReading() {
               Body Temperature
             </label>
             <div className="flex flex-row">
-              <Slider id='body_temp' max={100} min={0} itemType='float' defaultValue={[50]} onValueChange={(value) => setBodyTemp(value[0])} />
-              <div className="text-xl">{bodyTemp}</div>
+              <Slider id='body_temp' max={104} min={96} itemType='float' defaultValue={[100.0]} onValueChange={(value) => setBodyTemp(value[0])} />
+              <div className="text-md whitespace-nowrap">{bodyTemp} °F</div>
             </div>
           </div>
           <div className="">
@@ -88,12 +88,12 @@ export default function NewReading() {
               Heart Rate
             </label>
             <div className="flex flex-row">
-              <Slider id='heart_rate' max={100} min={0} defaultValue={[50]} onValueChange={(value) => setHeartRate(value[0])} />
-              <div className="text-xl">{heartRate}</div>
+              <Slider id='heart_rate' max={180} min={20} defaultValue={[100]} onValueChange={(value) => setHeartRate(value[0])} />
+              <div className="text-md whitespace-nowrap">{heartRate} bpm</div>
             </div>
           </div>
           <button
-            className="w-full h-10 sm:h-12 rounded-md bg-blue-500 text-white font-medium shadow-lg transition-colors hover:bg-blue-500/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+            className="w-full h-10 sm:h-12 rounded-xl shadow-xl bg-blue-500 text-white font-medium transition-colors hover:bg-blue-500/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
             type="submit"
           >
             Submit Data

@@ -72,11 +72,11 @@ const Dashboard = () => {
       <>
         <StyleLineGraph data={graphData} height={250} />
         <div className="p-2 flex overflow-x-scroll space-x-2 py-3 w-full no-scrollbar text-blue-500">
-          <button className={`rounded-lg px-2 py-1 whitespace-nowrap border-blue-500 ${graphSelectedVar === "Systolic Blood Pressure" && "bg-blue-500 text-white"} border-2`} onClick={() => { setGraphSelectedVar("Systolic Blood Pressure"); }}>Systolic BP</button>
-          <button className={`rounded-lg px-2 py-1 whitespace-nowrap border-blue-500 ${graphSelectedVar === "Diastolic Blood Pressure" && "bg-blue-500 text-white"} border-2`} onClick={() => { setGraphSelectedVar("Diastolic Blood Pressure"); }}>Diastolic BP</button>
-          <button className={`rounded-lg px-2 py-1 whitespace-nowrap border-blue-500 ${graphSelectedVar === "Blood Sugar" && "bg-blue-500 text-white"} border-2`} onClick={() => { setGraphSelectedVar("Blood Sugar"); }}>Blood Sugar</button>
-          <button className={`rounded-lg px-2 py-1 whitespace-nowrap border-blue-500 ${graphSelectedVar === "Body Temperature" && "bg-blue-500 text-white"} border-2`} onClick={() => { setGraphSelectedVar("Body Temperature"); }}> Body Temperature</button >
-          <button className={`rounded-lg px-2 py-1 whitespace-nowrap border-blue-500 ${graphSelectedVar === "Heart Rate" && "bg-blue-500 text-white"} border-2`} onClick={() => { setGraphSelectedVar("Heart Rate"); }}>Heart Rate</button>
+          <button className={`rounded-lg px-2 py-1 whitespace-nowrap border-blue-500 ${graphSelectedVar === "Systolic Blood Pressure" && "shadow-xl bg-blue-500 text-white"} border-2`} onClick={() => { setGraphSelectedVar("Systolic Blood Pressure"); }}>Systolic BP</button>
+          <button className={`rounded-lg px-2 py-1 whitespace-nowrap border-blue-500 ${graphSelectedVar === "Diastolic Blood Pressure" && "shadow-xl bg-blue-500 text-white"} border-2`} onClick={() => { setGraphSelectedVar("Diastolic Blood Pressure"); }}>Diastolic BP</button>
+          <button className={`rounded-lg px-2 py-1 whitespace-nowrap border-blue-500 ${graphSelectedVar === "Blood Sugar" && "shadow-xl bg-blue-500 text-white"} border-2`} onClick={() => { setGraphSelectedVar("Blood Sugar"); }}>Blood Sugar</button>
+          <button className={`rounded-lg px-2 py-1 whitespace-nowrap border-blue-500 ${graphSelectedVar === "Body Temperature" && "shadow-xl bg-blue-500 text-white"} border-2`} onClick={() => { setGraphSelectedVar("Body Temperature"); }}> Body Temperature</button >
+          <button className={`rounded-lg px-2 py-1 whitespace-nowrap border-blue-500 ${graphSelectedVar === "Heart Rate" && "shadow-xl bg-blue-500 text-white"} border-2`} onClick={() => { setGraphSelectedVar("Heart Rate"); }}>Heart Rate</button>
         </div>
       </>
     )
@@ -101,7 +101,7 @@ const Dashboard = () => {
     <div className="flex flex-col items-center min-h-screen bg-white">
 
       {/* parent of line must have defined size */}
-      <Logo logoText="Dashboard" />
+      <Logo logoText="Hygeia" />
       {graphs[graphDataVars.findIndex((graphDataVar) => graphDataVar === graphSelectedVar)]}
       <div className="border-b-2 w-full border-blue-500" />
       <ReadingsCard readings={readings} />

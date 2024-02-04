@@ -11,7 +11,7 @@ function ReadingCard({ riskLevel, date, id }: ReadingCardProps) {
 
   const color = riskLevel === 'High' ? 'bg-red-500' : riskLevel === 'Low' ? 'bg-black' : 'bg-yellow-500'
   return (
-    <li className="w-full">
+    <li className="w-full shadow-xl">
       <Link to={`/result/${id}`} className='flex flex-row w-full items-center justify-between py-2 border-[3px] border-blue-500 rounded-2xl px-4 hover:outline-none hover:ring-2 hover:ring-offset-2 hover:ring-offset-white hover:bg-gray-600'>
         <div>
           <p className="font-medium">{date}</p>
