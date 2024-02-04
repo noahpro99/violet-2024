@@ -9,3 +9,4 @@ pydantic
 pymongo
 shap
 openai
+requests

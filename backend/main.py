@@ -170,7 +170,7 @@ Maternity Health Predicted Risk: {result} (0: Low, 1: Moderate, 2: High)
 Maternity Health Predicted Risk: {result} (0: Low, 1: Moderate, 2: High)
 {important_vars}"""
     )
-    recommendation = response.choices[0].message.content
+    recommendation = str(response.choices[0].message.content)
 
     record = MaternityRecord(
         id=secrets.token_urlsafe(16),
@@ -272,7 +272,7 @@ async def get_results(
     db: Annotated[Database, Depends(get_mongo_db)],
 ) -> list[MaternityRecord]:
     results = db["results"]
-    user_results = results.find({"user_id": user["id"]}, {"_id": 0})
+    user_results = results.find({"user_id": user["id"]}, {"_id": 0}).sort("date", -1)
     return list(user_results)
 
 
