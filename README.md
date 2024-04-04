@@ -1,3 +1,7 @@
+# Aether
+
+![image](https://github.com/noahpro99/violet-2024/assets/22966838/e4e93777-89d3-447e-a1ea-0cdf3ad96765)
+
 ## Inspiration
 Our inspiration was the health of pregnant women. We aimed to establish a means for them to monitor their health conveniently, providing an avenue to check in on their well-being at their own convenience and complementing their regular visits to healthcare professionals.
 
